@@ -11,6 +11,11 @@ app.use((req, res, next) => {
   next();
 });
 
+const returnDate = (req, res, next) => {
+  res.json({ date: new Date().toString() });
+  next();
+};
+
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/views/index.html");
 });
@@ -22,11 +27,12 @@ app.get("/json", (req, res) => {
   res.json({ message: response });
 });
 
-app.get("/now", (req, res, next) => {
-    req.time = new Date().toString()
-    next()
-}, (req, res) => {
-  res.json({ time: req.time })
-})
+app.get("/now", returnDate, (req, res) => {
+  res.json({ time: new Date().toString() });
+});
 
+app.get("/:word/echo", (req, res) => {
+  const { word } = req.params;
+  res.json({ echo: word });
+});
 module.exports = app;
