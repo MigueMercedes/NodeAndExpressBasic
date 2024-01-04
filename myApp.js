@@ -11,6 +11,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.urlencoded({ extended: false }));
+
 const returnDate = (req, res, next) => {
   res.json({ date: new Date().toString() });
   next();
